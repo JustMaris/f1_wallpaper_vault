@@ -4,7 +4,7 @@ A personal collection of Formula 1 wallpapers, synced via GitHub for easy access
 
 ## 📦 About
 
-This repository contains various F1-themed wallpapers I've collected over time. There's no specific folder structure — just images added as I go.
+This repository contains various F1-themed wallpapers I've collected over time. There's some structure.
 
 ## 📥 Usage
 
