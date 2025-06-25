@@ -100,6 +100,12 @@ Replace `/path/to/your/f1-wallpapers` with your actual path.
       <string>/path/to/set-random-wallpapers-multi.sh</string>
     </array>
 
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
     <key>StartInterval</key>
     <integer>300</integer>
 
