@@ -83,6 +83,7 @@ Replace `/path/to/your/f1-wallpapers` with your actual path.
 
 ### Automating on macOS with `launchd`
 
+Save a plist file in ~/Library/LaunchAgents/{name_of_plist}.plist
 <details>
 <summary>Click to expand launchd configuration</summary>
 
@@ -126,8 +127,7 @@ Replace `/path/to/your/f1-wallpapers` with your actual path.
 Then load it:
 
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.maris.setwallpapers.plist 2>/dev/null
-launchctl load ~/Library/LaunchAgents/com.maris.setwallpapers.plist
+launchctl load ~/Library/LaunchAgents/{name_of_plist}.plist
 ```
 
 ---
