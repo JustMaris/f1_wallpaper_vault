@@ -1,39 +1,29 @@
-# 🏁 F1 Wallpapers
+# 🏁 F1 Wallpapers [ARCHIVED]
 
-A personal collection of Formula 1 wallpapers, synced via GitHub for easy access across multiple devices.
+> [!CAUTION]
+> **This repository is officially archived and no longer maintained.**
 
-Main source of photos is [Album by NonStopF1](https://photos.app.goo.gl/gGKXYSNM9xmJTMrF8)
+### 🛑 Why this project is deprecated
+Maintaining a collection of ~10,000 high-resolution images (approx. 13GB) via Git has proven technically unfeasible for the following reasons:
 
-## 📦 About
+* **Git History Bloat:** Git is designed for text versioning. Tracking binary blobs (images) means every addition or change is stored in the `.git` folder history forever. This leads to a massive local repository size (13GB+) that makes `git pull` and `git status` extremely slow.
+* **macOS Cache Inflation:** The native macOS wallpaper engine creates a cached version of every image set as a background. Rotating through thousands of unique image paths causes `wallpaper.db` and system support folders to balloon, eating up GBs of system storage.
+* **Better Alternatives:** Tools designed for media syncing (like Syncthing) or web-based wallpaper rendering (like Plash) handle large-scale collections without the metadata overhead of Git.
 
-This repository contains various F1-themed wallpapers I've collected over time. There's some structure.
+---
 
-## 📥 Usage
+## 🏎️ Original Project Info
+A personal collection of Formula 1 wallpapers, previously synced via GitHub for access across devices.
 
-You can clone or pull this repo to any device to keep your wallpaper collection in sync:
+**Main source of photos:** [Album by NonStopF1](https://photos.app.goo.gl/gGKXYSNM9xmJTMrF8)
 
-```bash
-git clone https://github.com/yourusername/f1-wallpapers.git
-```
-
-Then just browse or use your OS's wallpaper tools to set them.
-
-## 🖼️ Wallpaper Auto-Update Scripts (macOS, Linux, Windows)
-
-This repository provides scripts to randomly set unique wallpapers per monitor on different operating systems.
-
-### macOS
-
-**Requirements:**
-
-* [`desktoppr`](https://github.com/scriptingosx/desktoppr) installed via Homebrew:
-
-```bash
-brew install desktoppr
-```
+## 📦 Legacy Scripts (Provided As-Is)
+The scripts below are preserved for historical reference and educational purposes. Use at your own risk.
 
 <details>
-<summary>Use the provided <code>set-random-wallpapers-multi.sh</code> script</summary>
+<summary><b>macOS Auto-Update Script (Legacy)</b></summary>
+
+**Requirements:** [`desktoppr`](https://github.com/scriptingosx/desktoppr) installed via Homebrew.
 
 ```zsh
 #!/bin/zsh
@@ -78,132 +68,49 @@ for ((i=0; i < num_screens; i++)); do
   desktoppr "$i" "$wallpaper"
 done
 ```
-
 </details>
 
-Replace `/path/to/your/f1-wallpapers` with your actual path.
-
-### Automating on macOS with `launchd`
-
-Save a plist file in ~/Library/LaunchAgents/{name_of_plist}.plist
 <details>
-<summary>Click to expand launchd configuration</summary>
+<summary><b>Automating on macOS with launchd</b></summary>
+
+Save as a `.plist` file in `~/Library/LaunchAgents/com.f1.setwallpapers.plist`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "[http://www.apple.com/DTDs/PropertyList-1.0.dtd](http://www.apple.com/DTDs/PropertyList-1.0.dtd)">
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>com.maris.setwallpapers</string>
-
+    <string>com.f1.setwallpapers</string>
     <key>ProgramArguments</key>
     <array>
       <string>/path/to/set-random-wallpapers-multi.sh</string>
     </array>
-
     <key>EnvironmentVariables</key>
     <dict>
       <key>PATH</key>
       <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
     </dict>
-
     <key>StartInterval</key>
     <integer>300</integer>
-
     <key>RunAtLoad</key>
     <true/>
-
-    <key>StandardOutPath</key>
-    <string>/tmp/setwallpapers.out</string>
-
-    <key>StandardErrorPath</key>
-    <string>/tmp/setwallpapers.err</string>
   </dict>
 </plist>
 ```
-
-</details>
-
-Then load it:
-
-```bash
-launchctl load ~/Library/LaunchAgents/{name_of_plist}.plist
-```
-
----
-
-### Linux / Windows (Untested)
-
-<details>
-<summary>Click to view example Linux and Windows workflows</summary>
-
-#### Linux
-
-Install `feh` (Debian/Ubuntu):
-
-```bash
-sudo apt install feh
-```
-
-Example wallpaper script:
-
-```bash
-#!/bin/bash
-WALLPAPER_ROOT="/path/to/f1-wallpapers"
-
-mapfile -d '' wallpapers < <(find "$WALLPAPER_ROOT" -type f -iname '*.jpg' -print0)
-
-num_screens=$(xrandr --listmonitors | tail -n +2 | wc -l)
-
-if (( ${#wallpapers[@]} < num_screens )); then
-  echo "Not enough wallpapers for $num_screens monitors."
-  exit 1
-fi
-
-for ((i=0; i < num_screens; i++)); do
-  feh --bg-scale "${wallpapers[i]}"
-done
-```
-
-> Note: `feh` might set the last wallpaper on all screens depending on your DE.
-
----
-
-#### Windows
-
-Use third-party tools:
-
-* [DisplayFusion](https://www.displayfusion.com/)
-* [John's Background Switcher](https://johnsad.ventures/software/backgroundswitcher/)
-* [Wallpaper Engine](https://store.steampowered.com/app/431960/Wallpaper_Engine/)
-
-Sync wallpapers using Git for Windows. PowerShell support for multi-monitor setup is limited and typically requires Windows API access.
-
 </details>
 
 ---
 
-## 🔄 Syncing Across Devices
+## 🛠️ Recommended Modern Setup
+To achieve a similar multi-device setup without the technical debt:
 
-Keep your collection up to date by running:
-
-```bash
-git pull
-```
-
-Automate syncing with `cron`, `launchd`, Task Scheduler, or other tools.
+1.  **Syncing:** Use **[Syncthing](https://syncthing.net/)** (Open Source). It is a peer-to-peer sync engine that doesn't keep a 13GB version history of your images.
+2.  **Display Engine:** Use **[Plash](https://github.com/sindresorhus/Plash)** (Open Source). It renders wallpapers in a browser layer, which prevents the macOS wallpaper cache from growing.
+3.  **Live Content:** For video loops or interactive F1 dashboards, check out **[Aerial](https://github.com/JohnCoates/Aerial)** or **[Styx](https://github.com/Dvorak-S/Styx)**.
 
 ---
 
 ## 📌 Notes
-
 * Image copyrights belong to their original creators.
-* Intended for personal use only.
-
----
-
-## ✨ Suggestions
-
-Contributions and suggestions are welcome! Feel free to open an issue or fork the repo.
+* These scripts were developed for personal use and are no longer being updated for new OS versions.
